@@ -31,7 +31,7 @@ if __name__ == "__main__":
                         help='the date for retrieving exchange rate in yyyyMMdd format')
     input_args = parser.parse_args()
 
-    if not input_args.annual_month_ending and not input_args.single_date:
+    if (input_args.annual_month_ending is None) == (input_args.single_date is None):
         parser.error("One of -m or -d must be provided")
 
     sys.exit(main(input_args.start_currency, month_ending=input_args.annual_month_ending,

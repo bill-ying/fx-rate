@@ -14,7 +14,6 @@ class AbstractDate(ABC):
 
     def __init__(self, date_to_lookup: datetime):
         self._date: datetime = date_to_lookup
-
         super().__init__()
 
     @abstractmethod

@@ -1,6 +1,6 @@
 # fx-rate
 
-Get the exchange rate between Canadian dollar and US dollar from Bank of Canada.  The exchange rate(s) can be retrieved in one of following ways:
+Get the exchange rate between Canadian dollar and US dollar from Bank of Canada.  The exchange rate can be retrieved in one of following ways:
 - for a specific date
 - for the last Bank of Canada business day of each month of a specific year
 
@@ -8,7 +8,7 @@ The program takes one required argument, start_currency, which can be one of fol
 - c for CAD -> USD
 - u for USD -> CAD
 
-It also takes one of the following two optional parameters:
+It also takes one of the following two optional arguments:
 - -d for a specific date in yyyyMMdd format
 - -m for a specific year in yyyy format
 
