@@ -22,5 +22,5 @@ class AbstractDate(ABC):
 
     @staticmethod
     def _print_rate(rate_for_date):
-        rate_key = list(filter(lambda x: x != 'd', rate_for_date))[0]
+        rate_key = next(filter(lambda x: x != 'd', rate_for_date))
         print(rate_for_date['d'], rate_for_date[rate_key]['v'])
