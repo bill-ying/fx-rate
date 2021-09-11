@@ -1,4 +1,4 @@
-# fx-rate
+# fx_rate
 
 Get the exchange rate between Canadian dollar and US dollar from Bank of Canada.  The exchange rate can be retrieved in one of following ways:
 - for a specific date
@@ -16,7 +16,7 @@ This program depends on package "requests".
 
 Examples:
 - To retrieve the exchange rate from CAD to USD on 2021-03-31:
-  - python fx-rate.py c -d 20210331
+  - python fx_rate.py c -d 20210331
   
 - To retrieve the exchange rates from USD to CAD for the last Bank of Canada business day of each month in 2020:
-  - python fx-rate.py u -m 2020
+  - python fx_rate.py u -m 2020
