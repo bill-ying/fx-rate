@@ -3,8 +3,8 @@ import sys
 from datetime import datetime
 
 
-from usd import Usd
-from cad import Cad
+from usd_to_cad import UsdToCad
+from cad_to_usd import CadToUsd
 from month_end import MonthEnd
 from single_day import SingleDay
 
@@ -13,7 +13,7 @@ BOC_API_LINK = 'https://www.bankofcanada.ca/valet//observations/'
 
 
 def main(currency, **kwargs):
-    to_convert = Cad() if currency == 'c' else Usd()
+    to_convert = CadToUsd() if currency == 'c' else UsdToCad()
     month_ending = kwargs['month_ending']
     lookup_date = MonthEnd(month_ending[0]) if month_ending else SingleDay(kwargs['single_date'][0])
     lookup_date.get_exchange_rate(to_convert)
