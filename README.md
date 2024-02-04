@@ -20,3 +20,13 @@ Examples:
   
 - To retrieve the exchange rates from USD to CAD for the last Bank of Canada business day of each month in 2020:
   - python fx_rate.py u -m 2020
+
+
+The source code includes the necessary files to create a docker image. The docker image of this program can be pulled from docker hub:
+
+https://hub.docker.com/r/billying/fx-rate
+
+Example of running docker container:
+
+ - docker run billying/fx-rate c -d 20210331
+ - docker run billying/fx-rate u -m 2020
