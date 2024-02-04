@@ -9,7 +9,7 @@ The program takes one required argument, start_currency, which can be one of fol
 - u for USD -> CAD
 
 It also takes one of the following two optional arguments:
-- -d for a specific date in yyyyMMdd format
+- -d for a specific date in yyyymmdd format
 - -m for a specific year in yyyy format
 
 This program depends on package "requests".
