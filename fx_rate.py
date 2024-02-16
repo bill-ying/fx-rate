@@ -9,9 +9,6 @@ from month_end import MonthEnd
 from single_day import SingleDay
 
 
-BOC_API_LINK = 'https://www.bankofcanada.ca/valet//observations/'
-
-
 def main(currency, **kwargs):
     to_convert = CadToUsd() if currency == 'c' else UsdToCad()
     month_ending = kwargs['month_ending']

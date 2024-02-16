@@ -6,7 +6,7 @@ import requests
 
 class AbstractCurrency(ABC):
 
-    bank_of_canada_link = 'https://www.bankofcanada.ca/valet//observations/'
+    bank_of_canada_link = 'https://www.bankofcanada.ca/valet/observations/'
 
     @property
     @abstractmethod
