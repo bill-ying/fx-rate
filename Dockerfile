@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.12.2-slim-bookworm
+FROM python:3.13-slim-trixie
 
 # Set the working directory to /app
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # Install requests package
-RUN pip install requests==2.31.0
+RUN pip install -r requirements.txt
 
 # Run app.py when the container launches
 ENTRYPOINT ["python", "fx_rate.py"]

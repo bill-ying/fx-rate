@@ -1,8 +1,8 @@
 from datetime import datetime
 
 
-from abstract_currency import AbstractCurrency
-from abstract_date import AbstractDate, START_DATE, END_DATE, OBSERVATIONS
+from currencies.abstract_currency import AbstractCurrency
+from .abstract_date import AbstractDate, START_DATE, END_DATE, OBSERVATIONS
 
 
 class MonthEnd(AbstractDate):

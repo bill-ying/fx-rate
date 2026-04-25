@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 
 
-from abstract_currency import AbstractCurrency
+from currencies.abstract_currency import AbstractCurrency
 
 
 START_DATE = '?start_date='

@@ -1,4 +1,4 @@
-from abstract_currency import AbstractCurrency
+from .abstract_currency import AbstractCurrency
 
 
 class CadToUsd(AbstractCurrency):
