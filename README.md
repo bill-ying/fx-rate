@@ -55,6 +55,8 @@ GitHub Actions automatically builds multi‑architecture images (amd64 and arm64
 
 ### Run via Docker
 
+```bash
 docker run billying/fx-rate c -d 20210331
-docker run billying/fx-rate u -m 2020
+docker run billying/fx-rate u -m 
+```
 
