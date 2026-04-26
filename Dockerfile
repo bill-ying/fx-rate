@@ -4,11 +4,12 @@ FROM python:3.13-slim-trixie
 # Set the working directory to /app
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Install dependencies first (cached unless requirements.txt changes)
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Install requests package
-RUN pip install -r requirements.txt
+# Copy application source
+COPY . /app
 
 # Run app.py when the container launches
 ENTRYPOINT ["python", "fx_rate.py"]

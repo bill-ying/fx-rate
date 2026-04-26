@@ -12,7 +12,7 @@ class AbstractCurrency(ABC):
 
     def get_bank_of_canada_response(self, date_range: str = '') -> dict:
         with httpx.Client() as client:
-            url = f"{self.bank_of_canada_link}{self._bank_of_canada_series_name()}{date_range}"
+            url = f"{self.bank_of_canada_link}{self._bank_of_canada_series_name}{date_range}"
             response = client.get(url)
             response.raise_for_status()
             return response.json()
