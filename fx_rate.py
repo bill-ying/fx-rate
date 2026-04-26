@@ -5,7 +5,7 @@ from datetime import datetime
 from currencies.exchange_rate_factory import ExchangeRateFactory
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description='Get CAD to USD or USD to CAD exchange rate.')
     parser.add_argument('start_currency', choices=('c', 'u'),
                         help='c: CAD to USD, u: USD to CAD')

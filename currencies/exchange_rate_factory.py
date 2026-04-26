@@ -1,6 +1,7 @@
 from typing import Optional
 from datetime import datetime
 
+from .abstract_currency import AbstractCurrency
 from .usd_to_cad import UsdToCad
 from .cad_to_usd import CadToUsd
 from date_options.abstract_date import AbstractDate
@@ -9,7 +10,7 @@ from date_options.single_day import SingleDay
 
 class ExchangeRateFactory:
     @staticmethod
-    def get_currency_converter(currency_code: str):
+    def get_currency_converter(currency_code: str) -> AbstractCurrency:
         if currency_code == 'c':
             return CadToUsd()
         elif currency_code == 'u':

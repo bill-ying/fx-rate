@@ -12,15 +12,15 @@ OBSERVATIONS = 'observations'
 
 class AbstractDate(ABC):
 
-    def __init__(self, date_to_lookup: datetime):
+    def __init__(self, date_to_lookup: datetime) -> None:
         self._date: datetime = date_to_lookup
         super().__init__()
 
     @abstractmethod
-    def get_exchange_rate(self, currency: AbstractCurrency):
+    def get_exchange_rate(self, currency: AbstractCurrency) -> None:
         pass
 
     @staticmethod
-    def _print_rate(rate_for_date):
+    def _print_rate(rate_for_date) -> None:
         rate_key = next(filter(lambda x: x != 'd', rate_for_date))
         print(rate_for_date['d'], rate_for_date[rate_key]['v'])

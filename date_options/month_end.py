@@ -7,10 +7,10 @@ from .abstract_date import AbstractDate, START_DATE, END_DATE, OBSERVATIONS
 
 class MonthEnd(AbstractDate):
 
-    def __init__(self, date_to_lookup: datetime):
+    def __init__(self, date_to_lookup: datetime) -> None:
         super().__init__(date_to_lookup)
 
-    def get_exchange_rate(self, currency: AbstractCurrency):
+    def get_exchange_rate(self, currency: AbstractCurrency) -> None:
         year = str(self._date.year)
         bank_of_canada_response = currency.get_bank_of_canada_response(START_DATE + year + '-01-01' + END_DATE +
                                                                        year + '-12-31')

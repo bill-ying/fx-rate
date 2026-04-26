@@ -7,10 +7,10 @@ from .abstract_date import AbstractDate, START_DATE, END_DATE, OBSERVATIONS
 
 class SingleDay(AbstractDate):
 
-    def __init__(self, date_to_lookup: datetime):
+    def __init__(self, date_to_lookup: datetime) -> None:
         super().__init__(date_to_lookup)
 
-    def get_exchange_rate(self, currency: AbstractCurrency):
+    def get_exchange_rate(self, currency: AbstractCurrency) -> None:
         temp_date = self._date.strftime('%Y-%m-%d')
         bank_of_canada_response = currency.get_bank_of_canada_response(START_DATE + temp_date + END_DATE + temp_date)
         rate_for_date = next(filter(lambda x: x['d'] == temp_date, bank_of_canada_response[OBSERVATIONS]), None)
