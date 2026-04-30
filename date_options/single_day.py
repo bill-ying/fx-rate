@@ -13,7 +13,7 @@ class SingleDay(AbstractDate):
     def get_exchange_rate(self, currency: AbstractCurrency) -> None:
         temp_date = self._date.strftime('%Y-%m-%d')
         bank_of_canada_response = currency.get_bank_of_canada_response(START_DATE + temp_date + END_DATE + temp_date)
-        rate_for_date = next(filter(lambda x: x['d'] == temp_date, bank_of_canada_response[OBSERVATIONS]), None)
+        rate_for_date = next(filter(lambda x: x['d'] == temp_date, bank_of_canada_response.get(OBSERVATIONS, [])), None)
 
         if rate_for_date:
             AbstractDate._print_rate(rate_for_date)

@@ -9,14 +9,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(description='Get CAD to USD or USD to CAD exchange rate.')
     parser.add_argument('start_currency', choices=('c', 'u'),
                         help='c: CAD to USD, u: USD to CAD')
-    parser.add_argument('-m', '--annual_month_ending', nargs=1, type=lambda d: datetime.strptime(d, '%Y'),
+    
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-m', '--annual_month_ending', nargs=1, type=lambda d: datetime.strptime(d, '%Y'),
                         help='the year for retrieving last day of 12 months (YYYY)')
-    parser.add_argument('-d', '--single_date', nargs=1, type=lambda d: datetime.strptime(d, '%Y%m%d'),
+    group.add_argument('-d', '--single_date', nargs=1, type=lambda d: datetime.strptime(d, '%Y%m%d'),
                         help='the date for retrieving exchange rate (YYYYMMDD)')
     args = parser.parse_args()
-
-    if bool(args.annual_month_ending) == bool(args.single_date):
-        parser.error("One of -m or -d must be provided, but not both")
 
     try:
         converter = ExchangeRateFactory.get_currency_converter(args.start_currency)

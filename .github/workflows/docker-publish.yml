@@ -17,10 +17,13 @@ env:
   IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/fx-rate
 
 jobs:
-  build-test-push:
-    name: Build, Test, and Push
+  build:
+    name: Build
     runs-on: ubuntu-latest
-
+    outputs:
+      full_version: ${{ steps.version.outputs.full_version }}
+      version: ${{ steps.version.outputs.version }}
+      major_minor: ${{ steps.version.outputs.major_minor }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -39,6 +42,60 @@ jobs:
           echo "build_number=$BUILD_NUMBER" >> $GITHUB_OUTPUT
           echo "full_version=$FULL_VERSION" >> $GITHUB_OUTPUT
           echo "major_minor=$MAJOR_MINOR" >> $GITHUB_OUTPUT
+      
+      - name: Build and export image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          tags: fx-rate:test
+          outputs: type=docker,dest=/tmp/fx-rate-image.tar
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fx-rate-image
+          path: /tmp/fx-rate-image.tar
+          retention-days: 1
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: fx-rate-image
+          path: /tmp
+
+      - name: Load images
+        run: docker load -i /tmp/fx-rate-image.tar
+
+      - name: Test CAD to USD for a day
+        run: docker run --rm fx-rate:test c -d 20210331
+
+      - name: Test CAD to USD for month end for a year
+        run: docker run --rm fx-rate:test c -m 2025
+
+      - name: Test USD to CAD for a day
+        run: docker run --rm fx-rate:test u -d 20210601
+
+      - name: Test USD to CAD for month end for a year
+        run: docker run --rm fx-rate:test u -m 2023
+
+  push:
+    name: Push
+    runs-on: ubuntu-latest
+    needs: [build, test]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Extract metadata
         id: meta
@@ -46,36 +103,19 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=${{ steps.version.outputs.full_version }}
-            type=raw,value=${{ steps.version.outputs.version }}
-            type=raw,value=${{ steps.version.outputs.major_minor }}
+            type=raw,value=${{ needs.build.outputs.full_version }}
+            type=raw,value=${{ needs.build.outputs.version }}
+            type=raw,value=${{ needs.build.outputs.major_minor }}
             type=raw,value=latest,enable={{is_default_branch}}
             type=sha
-
-      - name: Build test image
-        uses: docker/build-push-action@v7
-        with:
-          context: .
-          load: true
-          tags: fx-rate:test
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-      - name: Test CAD to USD
-        run: docker run fx-rate:test c -d 20210331
-
-      - name: Test USD to CAD
-        run: docker run fx-rate:test u -d 20210601
-
+      
       - name: Login to Docker Hub
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: docker/login-action@v4
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
-
+      
       - name: Build and push to Docker Hub
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v7
         with:
           context: .

@@ -24,10 +24,10 @@ The exchange rates can be retrieved in two modes:
 
 `start_currency` — direction of conversion:
 
-- `c` → CAD → USD  
-- `u` → USD → CAD  
+- `c` → CAD to USD  
+- `u` → USD to CAD  
 
-### Optional Arguments
+### Date Selection (One Required)
 
 - `-d <yyyymmdd>` — retrieve rate for a specific date  
 - `-m <yyyy>` — retrieve rates for the last business day of each month in a year  
@@ -56,7 +56,7 @@ GitHub Actions automatically builds multi‑architecture images (amd64 and arm64
 ### Run via Docker
 
 ```bash
-docker run billying/fx-rate c -d 20210331
-docker run billying/fx-rate u -m 
+docker run --rm billying/fx-rate c -d 20210331
+docker run --rm billying/fx-rate u -m 2020
 ```
 
