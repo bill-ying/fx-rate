@@ -45,11 +45,15 @@ python fx_rate.py c -d 20210331
 python fx_rate.py u -m 2020
 ```
 
-## 🐳 Docker Support
+## 🐳 Docker Support & CI/CD
 
 The repository includes all components needed to build and package the application as a Docker image.
 
-GitHub Actions automatically builds multi‑architecture images (amd64 and arm64) and publishes them to Docker Hub:
+The CI/CD GitHub Actions pipeline automatically manages the lifecycle:
+- **Build**: Creates multi‑architecture images (amd64 and arm64).
+- **Test**: Validates the rate retrieval logic.
+- **Security**: Scans the built Docker image for vulnerabilities using **Snyk** (blocking deployment if high-severity issues are found).
+- **Publish**: Pushes the secure and validated image to Docker Hub.
 
 🔗 Docker Hub: https://hub.docker.com/r/billying/fx-rate
 
